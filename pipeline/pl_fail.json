@@ -1,0 +1,107 @@
+{
+	"name": "pl_fail",
+	"properties": {
+		"activities": [
+			{
+				"name": "Switch1",
+				"type": "Switch",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"on": {
+						"value": "@pipeline().parameters.InputValue",
+						"type": "Expression"
+					},
+					"cases": [
+						{
+							"value": "finance",
+							"activities": [
+								{
+									"name": "finance",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pl_GetMetadata",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								}
+							]
+						},
+						{
+							"value": "sales",
+							"activities": [
+								{
+									"name": "sales",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pl_CopyLatestFile",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								}
+							]
+						},
+						{
+							"value": "customers",
+							"activities": [
+								{
+									"name": "customers",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "pl_copy_sql_table",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true
+									}
+								}
+							]
+						}
+					],
+					"defaultActivities": [
+						{
+							"name": "Default Fail",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "Wrong user input.provide vaild input",
+								"errorCode": "error 404"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"InputValue": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "21st Jan"
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-01-21T20:03:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

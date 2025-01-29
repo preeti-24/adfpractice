@@ -1,0 +1,33 @@
+{
+	"name": "ds_source_excelsheetscopy_byindex",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_adls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Index": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "copy sheets from excel"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "inputExcelfile.xlsx",
+				"folderPath": "source",
+				"fileSystem": "gen2container"
+			},
+			"sheetIndex": {
+				"value": "@dataset().Index",
+				"type": "Expression"
+			}
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

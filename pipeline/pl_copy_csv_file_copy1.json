@@ -1,0 +1,179 @@
+{
+	"name": "pl_copy_csv_file_copy1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy csv file",
+				"description": "copy single file from source to target folder in same storage account ",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Series_reference",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Series_reference",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Period",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Period",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Data_value",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Data_value",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "STATUS",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "STATUS",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "UNITS",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "UNITS",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Subject",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Subject",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Group",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Group",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Series_title_1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Series_title_1",
+									"type": "String",
+									"physicalType": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Series_title_2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Series_title_2",
+									"type": "String",
+									"physicalType": "String"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_source_adls_copy_file2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_adls_copy_file",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-01-07T18:05:09Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

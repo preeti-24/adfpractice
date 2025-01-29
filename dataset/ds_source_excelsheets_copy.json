@@ -1,0 +1,33 @@
+{
+	"name": "ds_source_excelsheets_copy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_adls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ExcelSheetName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "copy sheets from excel"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": {
+				"value": "@dataset().ExcelSheetName",
+				"type": "Expression"
+			},
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "inputExcelfile.xlsx",
+				"folderPath": "source",
+				"fileSystem": "gen2container"
+			}
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

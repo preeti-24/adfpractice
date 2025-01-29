@@ -1,0 +1,21 @@
+{
+	"name": "adf-india-dev",
+	"properties": {
+		"globalParameters": {
+			"container": {
+				"type": "string",
+				"value": "gen2container"
+			},
+			"filepath": {
+				"type": "string",
+				"value": "Target"
+			}
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "97a1ca7a-36f7-4708-a4c2-9d31705d091b",
+		"tenantId": "44d5b1a5-16cc-4e33-bda9-22c4e8ef1f26"
+	}
+}

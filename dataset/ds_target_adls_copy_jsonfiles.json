@@ -1,0 +1,20 @@
+{
+	"name": "ds_target_adls_copy_jsonfiles",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_adls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Target/Alljsonfiles",
+				"fileSystem": "gen2container"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

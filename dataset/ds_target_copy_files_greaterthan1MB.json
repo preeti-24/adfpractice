@@ -1,0 +1,36 @@
+{
+	"name": "ds_target_copy_files_greaterthan1MB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_adls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TargetFile": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Copy based on file size"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().TargetFile",
+					"type": "Expression"
+				},
+				"folderPath": "Target/greaterthan1MB",
+				"fileSystem": "gen2container"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
