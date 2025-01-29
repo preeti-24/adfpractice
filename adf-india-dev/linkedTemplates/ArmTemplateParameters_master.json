@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-india-dev"
+		},
+		"ls_source_adls_blob_connectionString": {
+			"value": ""
+		},
+		"ls_source_adls_gen2_accountKey": {
+			"value": ""
+		},
+		"ls_source_sql_password": {
+			"value": ""
+		},
+		"ls_target_sql_password": {
+			"value": ""
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://azure-keyvault-11.vault.azure.net/"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://reqres.in/api/users"
+		},
+		"ls_keyvault_sql_properties_typeProperties_connectionString_secretName": {
+			"value": "sqlsecretkey"
+		},
+		"ls_source_adls_gen2_properties_typeProperties_url": {
+			"value": "https://adlsb2gen2.dfs.core.windows.net"
+		},
+		"ls_source_sql_properties_typeProperties_server": {
+			"value": "sqlserver01dev.database.windows.net"
+		},
+		"ls_source_sql_properties_typeProperties_database": {
+			"value": "sqldbdev"
+		},
+		"ls_source_sql_properties_typeProperties_userName": {
+			"value": "saadmin"
+		},
+		"ls_target_sql_properties_typeProperties_server": {
+			"value": "sqlserver01dev.database.windows.net"
+		},
+		"ls_target_sql_properties_typeProperties_database": {
+			"value": "sqldbtarget"
+		},
+		"ls_target_sql_properties_typeProperties_userName": {
+			"value": "saadmin"
+		},
+		"TW_properties_pipeline_parameters_StartDate": {
+			"value": "@trigger().outputs.windowStartTime"
+		},
+		"TW_properties_pipeline_parameters_EndDate": {
+			"value": "@trigger().outputs.windowEndTime"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
