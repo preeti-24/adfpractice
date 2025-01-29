@@ -1,18 +1,12 @@
 {
-	"name": "pl_copy_sql_table",
+	"name": "pl_copy_csv_file_new_for_cicd",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy csv file",
+				"description": "copy single file from source to target folder in same storage account ",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Wait1",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -23,9 +17,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -50,29 +50,20 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_source_sql_copy_table",
+						"referenceName": "ds_source_adls_copy_file",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_target_sql_table",
+						"referenceName": "ds_target_adls_copy_file",
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "Wait1",
-				"type": "Wait",
-				"dependsOn": [],
-				"userProperties": [],
-				"typeProperties": {
-					"waitTimeInSeconds": 10
-				}
 			}
 		],
 		"annotations": [],
-		"lastPublishTime": "2025-01-09T18:12:39Z"
+		"lastPublishTime": "2025-01-07T17:57:34Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
