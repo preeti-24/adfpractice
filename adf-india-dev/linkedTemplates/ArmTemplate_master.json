@@ -194,9 +194,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"ls_keyvault_sql_properties_typeProperties_connectionString_secretName": {
-						"value": "[parameters('ls_keyvault_sql_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},
@@ -217,6 +214,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_keyvault_sql_properties_typeProperties_connectionString_secretName": {
+						"value": "[parameters('ls_keyvault_sql_properties_typeProperties_connectionString_secretName')]"
 					}
 				}
 			},

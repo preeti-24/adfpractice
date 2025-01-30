@@ -1853,11 +1853,23 @@
 						"join1 filter(equals(dep,'HR')) ~> filter1",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     partitionFileNames:['outputfromdataflow'],",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          id = source1@id,",
+						"          location,",
+						"          mobileno,",
+						"          address,",
+						"          name,",
+						"          dep,",
+						"          salary,",
+						"          last_updated",
+						"     ),",
+						"     partitionBy('hash', 1)) ~> sink1"
 					]
 				}
 			},
@@ -1935,6 +1947,56 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_copy_keyvault')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_dataflow')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "31st Jan DATAFLOW"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
 			]
 		},
 		{
@@ -2247,131 +2309,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/pl_copy_sql_table')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_until')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Until1",
-						"type": "Until",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"expression": {
-								"value": "@bool(variables('Input'))",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Lookup1",
-									"description": "to get the table info",
-									"type": "Lookup",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"sqlReaderQuery": "select refreshed as status from dbo.mastertable where tablename = 'salesitem'\n",
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"dataset": {
-											"referenceName": "ds_source_lookup_until",
-											"type": "DatasetReference",
-											"parameters": {}
-										}
-									}
-								},
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "Lookup1",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@equals(activity('Lookup1').output.firstRow.status,'Y')",
-											"type": "Expression"
-										},
-										"ifTrueActivities": [
-											{
-												"name": "Set variable1",
-												"type": "SetVariable",
-												"dependsOn": [],
-												"policy": {
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"variableName": "Input",
-													"value": "True"
-												}
-											}
-										]
-									}
-								}
-							],
-							"timeout": "0.12:00:00"
-						}
-					},
-					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
-						"dependsOn": [
-							{
-								"activity": "Until1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pl_copy_csv_file",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"variables": {
-					"Input": {
-						"type": "String",
-						"defaultValue": "False"
-					}
-				},
-				"folder": {
-					"name": "21st Jan"
-				},
-				"annotations": [],
-				"lastPublishTime": "2025-01-22T08:37:15Z"
-			},
-			"dependsOn": []
 		}
 	]
 }

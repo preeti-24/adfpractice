@@ -6,6 +6,10 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-india-dev"
+		},
+		"ls_keyvault_sql_properties_typeProperties_connectionString_secretName": {
+			"type": "string",
+			"defaultValue": "sqlsecretkey"
 		}
 	},
 	"variables": {
@@ -13,44 +17,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_src1_sql_dataflow')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_source_sql",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "location",
-						"type": "nvarchar"
-					},
-					{
-						"name": "mobileno",
-						"type": "nvarchar"
-					},
-					{
-						"name": "address",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "employeeinfo"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_target_adls_dataflow')]",
+			"name": "[concat(parameters('factoryName'), '/ds_target_webactivity_copy')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -63,15 +30,36 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "Target/dataflow",
+						"fileName": "webactivityoutput.json",
+						"folderPath": "Target/webactivityoutput",
 						"fileSystem": "gen2container"
 					},
 					"columnDelimiter": ",",
-					"escapeChar": "\\",
+					"escapeChar": "",
 					"firstRowAsHeader": false,
-					"quoteChar": "\""
+					"quoteChar": ""
 				},
 				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_keyvault_sql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "[parameters('ls_keyvault_sql_properties_typeProperties_connectionString_secretName')]"
+					}
+				}
 			},
 			"dependsOn": []
 		},
