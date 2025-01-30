@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Target/sql",
+				"folderPath": "Target/sql1",
 				"fileSystem": "gen2container"
 			},
 			"columnDelimiter": ",",
