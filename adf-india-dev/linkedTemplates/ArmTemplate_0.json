@@ -58,6 +58,14 @@
 		"ls_target_sql_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "saadmin"
+		},
+		"ls_managedidentities_sql_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sqlserver01dev.database.windows.net"
+		},
+		"ls_managedidentities_sql_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sqldbdev"
 		}
 	},
 	"variables": {
@@ -253,6 +261,23 @@
 						"type": "SecureString",
 						"value": "[parameters('ls_target_sql_password')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_managedidentities_sql')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_managedidentities_sql_properties_typeProperties_server')]",
+					"database": "[parameters('ls_managedidentities_sql_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SystemAssignedManagedIdentity"
 				}
 			},
 			"dependsOn": []
@@ -690,34 +715,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_source_adls_gen2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_source_adls_blob_copy_file')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ls_source_adls_blob",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "students.csv",
-						"container": "blobcontainer"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_source_adls_blob')]"
 			]
 		}
 	]

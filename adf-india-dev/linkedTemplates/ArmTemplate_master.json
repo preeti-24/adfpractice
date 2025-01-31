@@ -71,6 +71,14 @@
 			"type": "string",
 			"defaultValue": "@trigger().outputs.windowEndTime"
 		},
+		"ls_managedidentities_sql_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sqlserver01dev.database.windows.net"
+		},
+		"ls_managedidentities_sql_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "sqldbdev"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -136,6 +144,12 @@
 					},
 					"ls_target_sql_properties_typeProperties_userName": {
 						"value": "[parameters('ls_target_sql_properties_typeProperties_userName')]"
+					},
+					"ls_managedidentities_sql_properties_typeProperties_server": {
+						"value": "[parameters('ls_managedidentities_sql_properties_typeProperties_server')]"
+					},
+					"ls_managedidentities_sql_properties_typeProperties_database": {
+						"value": "[parameters('ls_managedidentities_sql_properties_typeProperties_database')]"
 					}
 				}
 			},

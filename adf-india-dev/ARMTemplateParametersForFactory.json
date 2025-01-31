@@ -52,6 +52,12 @@
 		},
 		"TW_properties_pipeline_parameters_EndDate": {
 			"value": "@trigger().outputs.windowEndTime"
+		},
+		"ls_managedidentities_sql_properties_typeProperties_server": {
+			"value": "sqlserver01dev.database.windows.net"
+		},
+		"ls_managedidentities_sql_properties_typeProperties_database": {
+			"value": "sqldbdev"
 		}
 	}
 }
