@@ -4528,19 +4528,11 @@
 									"text": "select * from iplteams where team = @Team and name = @PlayerName"
 								},
 								{
-									"parameters": [
-										{
-											"name": "name",
-											"type": "String",
-											"value": {
-												"value": "@{pipeline().parameters.TableName}",
-												"type": "Expression"
-											},
-											"direction": "Input"
-										}
-									],
 									"type": "Query",
-									"text": "select * from @name"
+									"text": {
+										"value": "select * from @{pipeline().parameters.TableName}",
+										"type": "Expression"
+									}
 								}
 							],
 							"scriptBlockExecutionTimeout": "02:00:00"
