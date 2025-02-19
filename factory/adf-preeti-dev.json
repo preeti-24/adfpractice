@@ -1,0 +1,9 @@
+{
+	"name": "adf-preeti-dev",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b38bb2ce-c9a4-40ca-b465-3233167d7f22",
+		"tenantId": "0dd141ec-7cc0-435d-809d-23788fca1c1f"
+	}
+}
