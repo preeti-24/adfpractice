@@ -1,0 +1,74 @@
+{
+	"name": "pl_scriptactivity",
+	"properties": {
+		"activities": [
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "ls_source_sql",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "select * from iplteams\nprint 'Hi! Preeti'\nprint 'Hello World'"
+						},
+						{
+							"type": "Query",
+							"text": "drop table if exists student\ncreate table student(\nid int, name varchar(50))"
+						},
+						{
+							"parameters": [
+								{
+									"name": "Team",
+									"type": "String",
+									"value": "MI",
+									"direction": "Input"
+								},
+								{
+									"name": "PlayerName",
+									"type": "String",
+									"value": "Rohit",
+									"direction": "Input"
+								}
+							],
+							"type": "Query",
+							"text": "select * from iplteams where team = @Team and name = @PlayerName"
+						},
+						{
+							"type": "Query",
+							"text": {
+								"value": "select * from @{pipeline().parameters.TableName}",
+								"type": "Expression"
+							}
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"parameters": {
+			"TableName": {
+				"type": "string",
+				"defaultValue": "employees1"
+			}
+		},
+		"folder": {
+			"name": "22nd Jan"
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-01-31T15:45:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

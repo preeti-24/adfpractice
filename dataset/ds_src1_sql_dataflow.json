@@ -1,0 +1,35 @@
+{
+	"name": "ds_src1_sql_dataflow",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "location",
+				"type": "nvarchar"
+			},
+			{
+				"name": "mobileno",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "employeeinfo"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

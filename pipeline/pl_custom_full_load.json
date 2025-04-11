@@ -1,0 +1,110 @@
+{
+	"name": "pl_custom_full_load",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.TableName",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "AzureSqlSink",
+									"writeBehavior": "insert",
+									"sqlWriterUseTableLock": false
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_source_custom_fullload",
+									"type": "DatasetReference",
+									"parameters": {
+										"tablename": {
+											"value": "@item().tableName",
+											"type": "Expression"
+										},
+										"schemaname": {
+											"value": "@item().tableSchemaName",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_target_custom_fullload",
+									"type": "DatasetReference",
+									"parameters": {
+										"tblname": {
+											"value": "@item().tableName",
+											"type": "Expression"
+										},
+										"schemaname": {
+											"value": "@item().tableSchemaName",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"TableName": {
+				"type": "array",
+				"defaultValue": [
+					{
+						"tableName": "iplteams_last7",
+						"tableSchemaName": "dbo",
+						"WaterMark_Column": "last_updated"
+					},
+					{
+						"tableName": "employees_last7",
+						"tableSchemaName": "dbo",
+						"WaterMark_Column": "last_updated"
+					}
+				]
+			}
+		},
+		"folder": {
+			"name": "LoadType_27th Jan"
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-01-28T18:40:50Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,31 @@
+{
+	"name": "ds_source_sql_copyactivity_incload",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_sql",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tblname": {
+				"type": "string"
+			},
+			"schemaname": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schemaname",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tblname",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

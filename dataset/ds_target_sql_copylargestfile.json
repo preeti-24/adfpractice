@@ -1,0 +1,28 @@
+{
+	"name": "ds_target_sql_copylargestfile",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_source_sql",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"DestinationFile": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Copy based on file size"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@dataset().DestinationFile",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
